@@ -3,9 +3,22 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET           /                            controllers.Application.index()
+
+# User page
+GET           /user                        controllers.UserController.getUser()
+GET           /user/$userId<[0-9]+>        controllers.UserController.getSpecificUser(userId: Long)
+POST          /user                        controllers.UserController.addUser()
+PUT           /user                        controllers.UserController.updateUser()
+DELETE        /user                        controllers.UserController.removeUser()
+
+# Command
+GET           /command                     controllers.CommandController.getCommands()
+POST          /command                     controllers.CommandController.addCommand()
+DELETE        /command                     controllers.CommandController.removeCommand()
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET           /assets/*file                controllers.Assets.at(path="/public", file)
 
-    
+
