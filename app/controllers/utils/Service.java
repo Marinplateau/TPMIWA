@@ -46,7 +46,11 @@ public class Service {
     }
 
     private void loadProd() {
-        this.port = Integer.parseInt(System.getenv("MIWA_PORT"));
+        String envPort = System.getenv("MIWA_PORT");
+        if (envPort == null || envPort.isEmpty())
+            this.port = 9000;
+        else
+            this.port = Integer.parseInt(envPort);
         this.services = new HashMap<>();
         this.services.put(MAIN_WS, "http://main.miwa.bnf.sigl.epita.fr");
         this.services.put(FTP, "ftp://ftp.miwa.bnf.sigl.epita.fr");
