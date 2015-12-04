@@ -4,38 +4,30 @@
 # --- !Ups
 
 create table command (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   ref                       varchar(255) not null,
   body                      TEXT not null,
   constraint pk_command primary key (id))
 ;
 
 create table user (
-  user_id                   bigint not null,
+  user_id                   bigint auto_increment not null,
   login                     varchar(255) not null,
   password                  varchar(255) not null,
   constraint uq_user_login unique (login),
   constraint pk_user primary key (user_id))
 ;
 
-create sequence command_seq;
-
-create sequence user_seq;
-
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists command;
+drop table command;
 
-drop table if exists user;
+drop table user;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists command_seq;
-
-drop sequence if exists user_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

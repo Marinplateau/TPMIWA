@@ -10,6 +10,8 @@ libraryDependencies ++= Seq( javaJdbc , javaEbean , cache , javaWs )
 
 libraryDependencies += "com.mashape.unirest" % "unirest-java" % "1.4.7"
 
-//TODO: add mysql
+libraryDependencies += "commons-net" % "commons-net" % "3.3"
+
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.37"
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
