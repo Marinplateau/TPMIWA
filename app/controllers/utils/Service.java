@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Service {
 
-    private static Service service = null;
+    private static Service service = new Service();
 
     private Integer port;
     private String host;
@@ -39,9 +39,6 @@ public class Service {
     }
 
     public static Service getInstances() {
-        if (service == null)
-            service = new Service();
-
         return service;
     }
 
@@ -52,26 +49,26 @@ public class Service {
         else
             this.port = Integer.parseInt(envPort);
         this.services = new HashMap<>();
-        this.services.put(MAIN_WS, "http://main.miwa.bnf.sigl.epita.fr");
-        this.services.put(FTP, "ftp://ftp.miwa.bnf.sigl.epita.fr");
-        this.services.put(BACK_OFFICE, "http://back-office.miwa.bnf.sigl.epita.fr");
-        this.services.put(BI_SYSTEM, "http://bi-system.miwa.bnf.sigl.epita.fr");
-        this.services.put(BUSINESS_MANAGEMENT, "http://business-management.miwa.bnf.sigl.epita.fr");
-        this.services.put(CRM, "http://crm.miwa.bnf.sigl.epita.fr");
-        this.services.put(E_COMMERCE, "http://e-commerce.miwa.bnf.sigl.epita.fr");
-        this.services.put(MONETARY_SYSTEM, "http://monetary-system.miwa.bnf.sigl.epita.fr");
-        this.services.put(POS_SYSTEM, "http://pos-system.miwa.bnf.sigl.epita.fr");
-        this.services.put(PRODUCT_CATALOG, "http://product-catalogue.miwa.bnf.sigl.epita.fr");
-        this.services.put(PROVIDER, "http://provider.miwa.bnf.sigl.epita.fr");
-        this.services.put(WHAREHOUSE_MANAGEMENT, "http://wharehouse-management.miwa.bnf.sigl.epita.fr");
+        this.services.put(MAIN_WS, "main.miwa.bnf.sigl.epita.fr");
+        this.services.put(FTP, "ftp.miwa.bnf.sigl.epita.fr");
+        this.services.put(BACK_OFFICE, "back-office.miwa.bnf.sigl.epita.fr");
+        this.services.put(BI_SYSTEM, "bi-system.miwa.bnf.sigl.epita.fr");
+        this.services.put(BUSINESS_MANAGEMENT, "business-management.miwa.bnf.sigl.epita.fr");
+        this.services.put(CRM, "crm.miwa.bnf.sigl.epita.fr");
+        this.services.put(E_COMMERCE, "e-commerce.miwa.bnf.sigl.epita.fr");
+        this.services.put(MONETARY_SYSTEM, "monetary-system.miwa.bnf.sigl.epita.fr");
+        this.services.put(POS_SYSTEM, "pos-system.miwa.bnf.sigl.epita.fr");
+        this.services.put(PRODUCT_CATALOG, "product-catalogue.miwa.bnf.sigl.epita.fr");
+        this.services.put(PROVIDER, "provider.miwa.bnf.sigl.epita.fr");
+        this.services.put(WHAREHOUSE_MANAGEMENT, "wharehouse-management.miwa.bnf.sigl.epita.fr");
     }
 
     private void loadDev() {
         this.port = 9000;
-        this.host = "http://127.0.0.1" + port;
+        this.host = "127.0.0.1" + port;
         this.services = new HashMap<>();
-        this.services.put(MAIN_WS, "http://127.0.0.1:8181");
-        this.services.put(TP_MIWA, "http://127.0.0.1");
+        this.services.put(MAIN_WS, "127.0.0.1:8181");
+        this.services.put(TP_MIWA, "127.0.0.1");
     }
 
     public Integer getPort() {
@@ -145,5 +142,9 @@ public class Service {
     public String getServiceURL(String name)
     {
         return this.services.get(name);
+    }
+    public String getServiceHttpURL(String name)
+    {
+        return "http://" + this.services.get(name);
     }
 }
