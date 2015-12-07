@@ -43,7 +43,7 @@ public class FtpSender {
     }
 
     public File downloadFile() {
-
+        return null;
     }
 }
 
