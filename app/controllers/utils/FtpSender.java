@@ -4,37 +4,40 @@ package controllers.utils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class FtpSender {
 
-    private FTPClient connectToServer() throws IOException {
+    private static FTPClient connectToServer() throws IOException {
 
         FTPClient ftpClient = new FTPClient();
-        ftpClient.connect(Service.getInstances().getServiceURL(Service.FTP));
+        ftpClient.connect(Service.getInstances().getServiceURL(ServiceName.FTP), 21);
+        ftpClient.login("sigl", "sigl2016");
         ftpClient.enterLocalPassiveMode();
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+        ftpClient.changeWorkingDirectory("/" + Service.SERVICE_NAME);
+        if (ftpClient.getReplyCode() == 550)
+            ftpClient.makeDirectory("/" + Service.SERVICE_NAME);
 
         return ftpClient;
     }
 
-    private void closeConnection(FTPClient ftpClient) throws IOException {
+    private static void closeConnection(FTPClient ftpClient) throws IOException {
         if (ftpClient != null && ftpClient.isConnected()) {
             ftpClient.logout();
             ftpClient.disconnect();
         }
     }
 
-    public boolean sendFile(File file) throws IOException {
+    public static boolean sendFile(File inputFile) throws IOException {
         FTPClient ftpClient = null;
         boolean done = false;
         try {
             ftpClient = connectToServer();
-            InputStream inputStream = new FileInputStream(file);
-            done = ftpClient.storeFile(file.getName(), inputStream);
+            ftpClient.changeWorkingDirectory("/" + Service.SERVICE_NAME);
+            InputStream inputStream = new FileInputStream(inputFile);
+            done = ftpClient.storeFile(inputFile.getName(), inputStream);
             inputStream.close();
         } finally {
             closeConnection(ftpClient);
@@ -42,8 +45,19 @@ public class FtpSender {
         return done;
     }
 
-    public File downloadFile() {
-        return null;
+    public static boolean downloadFile(String remoteFile, File outputFile) throws IOException {
+        FTPClient ftpClient = null;
+        boolean done = false;
+        try {
+            ftpClient = connectToServer();
+            OutputStream outputStream = new FileOutputStream(outputFile);
+            done = ftpClient.retrieveFile(remoteFile, outputStream);
+            outputStream.close();
+        }
+        finally {
+            closeConnection(ftpClient);
+        }
+        return done;
     }
 }
 

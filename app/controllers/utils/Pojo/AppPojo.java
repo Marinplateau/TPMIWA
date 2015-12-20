@@ -1,7 +1,7 @@
 package controllers.utils.Pojo;
 
 
-public class AppPojo {
+public class AppPojo implements Pojo {
     private String name;
     private String hostname;
     private String port;

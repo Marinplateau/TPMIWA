@@ -4,6 +4,7 @@
 
 # Home page
 GET           /                            controllers.Application.index()
+GET           /uploadTest                  controllers.Application.upload()
 
 # User page
 GET           /user                        controllers.UserController.getUser()

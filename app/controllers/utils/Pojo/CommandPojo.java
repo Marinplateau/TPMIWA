@@ -2,7 +2,7 @@ package controllers.utils.Pojo;
 
 import play.data.validation.Constraints;
 
-public class CommandPojo {
+public class CommandPojo implements Pojo {
     private Long commandId;
 
     @Constraints.Required
