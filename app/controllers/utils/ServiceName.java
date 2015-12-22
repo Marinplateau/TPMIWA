@@ -3,6 +3,7 @@ package controllers.utils;
 public enum ServiceName {
     MAIN_WS,
     FTP,
+    RABBITMQ,
     BACK_OFFICE,
     BI_SYSTEM,
     BUSINESS_MANAGEMENT,

@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.utils.FtpSender;
+import controllers.utils.sender.FtpSender;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;

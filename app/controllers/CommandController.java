@@ -1,7 +1,7 @@
 package controllers;
 
 
-import controllers.utils.Pojo.CommandPojo;
+import controllers.utils.pojo.SyncMessagePojo.CommandPojo;
 import model.Command;
 import play.libs.Json;
 import play.mvc.Result;

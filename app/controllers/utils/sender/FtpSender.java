@@ -1,25 +1,34 @@
-package controllers.utils;
+package controllers.utils.sender;
 
 
+import controllers.utils.Service;
+import controllers.utils.ServiceName;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import play.Logger;
 
 import java.io.*;
 
 public class FtpSender {
 
+
+    private static final String FTP_USER = "sigl";
+    private static final String FTP_PASSWORD = "sigl2016";
+    private static final String FTP_APP_DIRECTORY = "/" + Service.SERVICE_NAME;
+
     private static FTPClient connectToServer() throws IOException {
 
         FTPClient ftpClient = new FTPClient();
         ftpClient.connect(Service.getInstances().getServiceURL(ServiceName.FTP), 21);
-        ftpClient.login("sigl", "sigl2016");
+        ftpClient.login(FTP_USER, FTP_PASSWORD);
         ftpClient.enterLocalPassiveMode();
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-        ftpClient.changeWorkingDirectory("/" + Service.SERVICE_NAME);
+        ftpClient.changeWorkingDirectory(FTP_APP_DIRECTORY);
         if (ftpClient.getReplyCode() == 550)
-            ftpClient.makeDirectory("/" + Service.SERVICE_NAME);
+            ftpClient.makeDirectory(FTP_APP_DIRECTORY);
 
+        Logger.info("Connected to FTP server");
         return ftpClient;
     }
 
@@ -28,6 +37,8 @@ public class FtpSender {
             ftpClient.logout();
             ftpClient.disconnect();
         }
+        Logger.info("Disconnected to FTP server");
+
     }
 
     public static boolean sendFile(File inputFile) throws IOException {
@@ -35,9 +46,10 @@ public class FtpSender {
         boolean done = false;
         try {
             ftpClient = connectToServer();
-            ftpClient.changeWorkingDirectory("/" + Service.SERVICE_NAME);
+            ftpClient.changeWorkingDirectory(FTP_APP_DIRECTORY);
             InputStream inputStream = new FileInputStream(inputFile);
             done = ftpClient.storeFile(inputFile.getName(), inputStream);
+            Logger.info("store File {} on FTP server", inputFile.getName());
             inputStream.close();
         } finally {
             closeConnection(ftpClient);
@@ -52,6 +64,7 @@ public class FtpSender {
             ftpClient = connectToServer();
             OutputStream outputStream = new FileOutputStream(outputFile);
             done = ftpClient.retrieveFile(remoteFile, outputStream);
+            Logger.info("file {} downloaded and store {}", remoteFile, outputFile.getPath());
             outputStream.close();
         }
         finally {

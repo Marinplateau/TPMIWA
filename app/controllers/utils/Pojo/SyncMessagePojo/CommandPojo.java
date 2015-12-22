@@ -1,8 +1,8 @@
-package controllers.utils.Pojo;
+package controllers.utils.pojo.SyncMessagePojo;
 
 import play.data.validation.Constraints;
 
-public class CommandPojo implements Pojo {
+public class CommandPojo implements SyncMessagePojo {
     private Long commandId;
 
     @Constraints.Required

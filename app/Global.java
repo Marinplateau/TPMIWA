@@ -1,9 +1,8 @@
 import com.mashape.unirest.http.exceptions.UnirestException;
-import controllers.utils.Pojo.ClockPojo;
-import controllers.utils.Pojo.CommandPojo;
+import controllers.utils.pojo.SyncMessagePojo.ClockPojo;
+import controllers.utils.pojo.SyncMessagePojo.CommandPojo;
 import controllers.utils.Service;
-import controllers.utils.ServiceName;
-import controllers.utils.SyncMessageSender;
+import controllers.utils.sender.SyncMessageSender;
 import play.Application;
 import play.GlobalSettings;
 import play.libs.Json;
@@ -23,11 +22,8 @@ public class Global extends GlobalSettings {
 
     private void addCallback() {
         try {
-            System.out.println("add callback for get");
             SyncMessageSender.addCallbackOnMainService(" 0 * * * * *", "/command", "", Service.SERVICE_NAME, ClockPojo.RequestType.GET);
-            System.out.println("add callback for post");
             SyncMessageSender.addCallbackOnMainService(" 0 * * * * *", "/command", Json.toJson(new CommandPojo("ddee", "fefef")).toString(), Service.SERVICE_NAME, ClockPojo.RequestType.POST);
-            System.out.println("add callback for delete");
             SyncMessageSender.addCallbackOnMainService(" 0 * * * * *", "/command", Json.toJson(new CommandPojo(12L)).toString(), Service.SERVICE_NAME, ClockPojo.RequestType.DELETE);
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -37,7 +33,6 @@ public class Global extends GlobalSettings {
     private void saveService() {
         try {
             SyncMessageSender.addServiceOnMainService(Service.SERVICE_NAME);
-            System.out.println("record on WS");
 
         } catch (UnirestException e) {
             e.printStackTrace();

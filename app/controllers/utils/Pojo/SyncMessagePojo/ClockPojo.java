@@ -1,6 +1,6 @@
-package controllers.utils.Pojo;
+package controllers.utils.pojo.SyncMessagePojo;
 
-public class ClockPojo implements Pojo {
+public class ClockPojo implements SyncMessagePojo {
     private String cron;
     private String endpoint;
     private String message;

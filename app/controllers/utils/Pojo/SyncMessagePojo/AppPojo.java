@@ -1,7 +1,7 @@
-package controllers.utils.Pojo;
+package controllers.utils.pojo.SyncMessagePojo;
 
 
-public class AppPojo implements Pojo {
+public class AppPojo implements SyncMessagePojo {
     private String name;
     private String hostname;
     private String port;
