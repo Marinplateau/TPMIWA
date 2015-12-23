@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 public class Global extends GlobalSettings {
-
-
-
     @Override
     public void onStart(Application application) {
         if (application.isDev())

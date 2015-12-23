@@ -13,6 +13,6 @@ public enum ServiceName {
     POS_SYSTEM,
     PRODUCT_CATALOG,
     PROVIDER,
-    WHAREHOUSE_MANAGEMENT,
+    WAREHOUSE_MANAGEMENT,
     TP_MIWA;
 }
