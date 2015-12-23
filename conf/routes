@@ -5,9 +5,10 @@
 # Home page
 GET           /                            controllers.Application.index()
 GET           /uploadTest                  controllers.Application.upload()
+GET           /sendAsynMessage             controllers.Application.sendAsyncMessage()
 
 # User page
-GET           /user                        controllers.UserController.getUser()
+GET           /user                        controllers.UserController.getUsers()
 GET           /user/$userId<[0-9]+>        controllers.UserController.getSpecificUser(userId: Long)
 POST          /user                        controllers.UserController.addUser()
 PUT           /user                        controllers.UserController.updateUser()

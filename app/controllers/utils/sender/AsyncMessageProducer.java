@@ -6,7 +6,6 @@ import org.apache.commons.lang3.SerializationUtils;
 import play.Logger;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
 
 public class AsyncMessageProducer extends AsyncMessageSender {
@@ -16,6 +15,6 @@ public class AsyncMessageProducer extends AsyncMessageSender {
 
     public void sendMessage(AsyncMessagePojo asyncMessagePojo) throws IOException {
         this.channel.basicPublish("", this.queueName, null, SerializationUtils.serialize(asyncMessagePojo));
-        Logger.info("AsyncMessage sent {}", asyncMessagePojo.getClass());
+        Logger.info("producer sent message type:{}", asyncMessagePojo.getClass());
     }
 }

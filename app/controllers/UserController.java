@@ -12,12 +12,12 @@ import static play.mvc.Results.ok;
 
 public class UserController {
 
-    public static Result getUser() {
+    public static Result getUsers() {
         List<User> users = User.find.all();
         return play.mvc.Results.TODO;
     }
 
-    public static Result getUserJson() {
+    public static Result getUsersJson() {
         List<User> users = User.find.all();
         return ok(Json.toJson(users));
     }

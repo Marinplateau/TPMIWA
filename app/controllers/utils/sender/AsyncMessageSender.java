@@ -18,6 +18,8 @@ public abstract class AsyncMessageSender {
     public AsyncMessageSender(String queueName) throws IOException, TimeoutException {
         this.queueName = queueName;
         ConnectionFactory factory = new ConnectionFactory();
+        factory.setUsername("sigl");
+        factory.setPassword("sigl2016");
         factory.setHost(Service.getInstances().getServiceURL(ServiceName.RABBITMQ));
         this.connection = factory.newConnection();
         this.channel = connection.createChannel();

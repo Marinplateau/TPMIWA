@@ -5,11 +5,16 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 import controllers.utils.pojo.AsyncMessagePojo.AsyncMessagePojo;
+import controllers.utils.pojo.AsyncMessagePojo.SimpleMessagePojo;
 import org.apache.commons.lang3.SerializationUtils;
 import play.Logger;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.util.concurrent.TimeoutException;
+
 
 public class AsyncMessageConsumer extends AsyncMessageSender implements Runnable, Consumer {
     public AsyncMessageConsumer(String queueName) throws IOException, TimeoutException {
@@ -31,23 +36,36 @@ public class AsyncMessageConsumer extends AsyncMessageSender implements Runnable
     @Override
     public void handleDelivery(String s, Envelope envelope, AMQP.BasicProperties basicProperties, byte[] bytes) throws IOException {
 
-        AsyncMessagePojo asyncMessagePojo = (AsyncMessagePojo) SerializationUtils.deserialize(bytes);
-        Logger.info("Message is type of: {}", asyncMessagePojo.getClass());
-        asyncMessagePojo.action();
+        try {
+            InputStream inputStream;
+            inputStream = new ByteArrayInputStream(bytes);
+            ObjectInputStream o = new ObjectInputStream(inputStream);
+            AsyncMessagePojo pojo = (AsyncMessagePojo) o.readObject();
+            Logger.info("receive new async message of type", pojo.getClass());
+            pojo.action();
+            Logger.info("execution of message completed");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void handleConsumeOk(String s) {}
+    public void handleConsumeOk(String s) {
+    }
 
     @Override
-    public void handleCancelOk(String s) {}
+    public void handleCancelOk(String s) {
+    }
 
     @Override
-    public void handleCancel(String s) throws IOException {}
+    public void handleCancel(String s) throws IOException {
+    }
 
     @Override
-    public void handleShutdownSignal(String s, ShutdownSignalException e) {}
+    public void handleShutdownSignal(String s, ShutdownSignalException e) {
+    }
 
     @Override
-    public void handleRecoverOk(String s) {}
+    public void handleRecoverOk(String s) {
+    }
 }
